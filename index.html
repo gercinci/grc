@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0d14" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="description" content="Piyasa İstanbul — gerçek 3B İstanbul'da yürü ya da direksiyona geç." />
+  <title>Piyasa İstanbul</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./src/ui/style.css" />
+</head>
+<body>
+  <canvas id="game"></canvas>
+
+  <!-- OYUN İÇİ GÖSTERGELER -->
+  <div id="hud" hidden>
+    <div id="weather" class="chip"><span id="w-icon">☀️</span><span id="w-text">—</span></div>
+    <button id="btn-menu" class="round" data-action="menu" aria-label="Menü">☰</button>
+    <div id="hint"></div>
+    <div id="speedo" hidden><b id="speed">0</b><span>km/sa</span><i id="car-name"></i></div>
+    <div id="touch">
+      <div id="foot-btns">
+        <button class="tb" data-hold="jump">Zıpla</button>
+        <button class="tb" data-hold="run">Koş</button>
+      </div>
+      <div id="car-btns" hidden>
+        <button class="tb small" data-hold="horn">Korna</button>
+        <button class="tb small" data-hold="handbrake">El freni</button>
+        <button class="tb brake" data-hold="brake">Fren</button>
+        <button class="tb gas" data-hold="throttle">Gaz</button>
+      </div>
+      <button id="btn-interact" class="tb accent" data-action="interact" hidden>Bin</button>
+    </div>
+  </div>
+  <div id="joy"><div id="joy-knob"></div></div>
+  <div id="attribution"></div>
+
+  <!-- YÜKLENİYOR -->
+  <div id="loading" class="overlay" hidden>
+    <div class="load-box">
+      <div class="logo small">Piyasa <em>İstanbul</em></div>
+      <p id="load-text">İstanbul yükleniyor…</p>
+      <div class="bar"><div id="load-bar"></div></div>
+    </div>
+  </div>
+
+  <!-- BAŞLANGIÇ EKRANI -->
+  <div id="start" class="overlay">
+    <div class="start-inner">
+      <header>
+        <h1 class="logo">Piyasa <em>İstanbul</em></h1>
+        <p class="tag">Şehir senin. İster yürü, ister bas gaza.</p>
+      </header>
+
+      <section id="key-panel" class="panel" hidden>
+        <h2>Google 3B harita anahtarı</h2>
+        <p>Gerçek 3B İstanbul, Google'ın fotogerçekçi harita sunucularından gelir. Bunun için
+          <b>Map Tiles API</b> etkin bir Google Maps API anahtarı gerekir. Anahtar yalnızca bu cihazda saklanır.</p>
+        <div class="row">
+          <input id="key-input" type="password" placeholder="AIza…" autocomplete="off" spellcheck="false" />
+          <button id="key-save" class="btn">Kaydet</button>
+        </div>
+        <p id="key-error" class="error" hidden></p>
+        <button id="demo-btn" class="link">Anahtarım yok — 2B haritalı demo ile dene</button>
+      </section>
+
+      <section id="setup" class="panel">
+        <div class="field">
+          <h2>Nereden başlıyorsun?</h2>
+          <div id="locations" class="chips"></div>
+        </div>
+        <div class="field">
+          <h2>Nasıl geziyorsun?</h2>
+          <div class="seg" id="mode">
+            <button data-mode="car" class="on">🚗 Arabayla</button>
+            <button data-mode="foot">🚶 Yürüyerek</button>
+          </div>
+        </div>
+        <div class="field" id="car-field">
+          <h2>Aracını seç</h2>
+          <div class="car-pick">
+            <canvas id="car-preview" width="480" height="270"></canvas>
+            <div class="car-info">
+              <div class="car-nav">
+                <button id="car-prev" class="round" aria-label="Önceki araç">‹</button>
+                <div><b id="car-title"></b><small id="car-year"></small></div>
+                <button id="car-next" class="round" aria-label="Sonraki araç">›</button>
+              </div>
+              <p id="car-tag"></p>
+              <div id="car-stats"></div>
+              <div id="car-paints" class="paints"></div>
+              <button class="btn ghost" disabled title="Çok yakında">🔧 Modifiye atölyesi — yakında</button>
+            </div>
+          </div>
+        </div>
+        <button id="start-btn" class="btn big">Başla</button>
+        <p class="keys desktop-only">W A S D sür / yürü · Fare kamera · F bin / in · Boşluk el freni / zıpla · Shift koş · H korna · R kurtar · Esc menü</p>
+      </section>
+      <footer id="mode-note"></footer>
+    </div>
+  </div>
+
+  <!-- DURAKLATMA MENÜSÜ -->
+  <div id="pause" class="overlay" hidden>
+    <div class="panel pause-panel">
+      <h1 class="logo small">Piyasa <em>İstanbul</em></h1>
+      <button id="resume" class="btn big">Devam et</button>
+      <label>Işınlan<select id="p-location"></select></label>
+      <label>Araç çağır<select id="p-car"></select></label>
+      <label>Hava<select id="p-weather"></select></label>
+      <label>Saat<select id="p-time">
+        <option value="live">Canlı (İstanbul saati)</option><option value="day">Gündüz</option>
+        <option value="sunset">Gün batımı</option><option value="night">Gece</option></select></label>
+      <label>Görüntü kalitesi<select id="p-quality"></select></label>
+      <label class="check"><input type="checkbox" id="p-sound" checked /> Ses</label>
+      <button id="to-start" class="link">Ana menüye dön</button>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
