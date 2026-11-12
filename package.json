@@ -1,0 +1,11 @@
+{
+  "name": "tahmintor",
+  "private": true,
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "test": "npm run test:core && npm run test:db",
+    "test:core": "npm test -w @tahmintor/core",
+    "test:db": "bash supabase/tests/run.sh",
+    "typecheck": "npm run typecheck -w @tahmintor/core"
+  }
+}
