@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agorà İtalyanca Felsefe</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%232c4a9a'/%3E%3Ccircle cx='47' cy='14' r='5' fill='%23f0c545'/%3E%3Cpath d='M32 14 12 27h40z' fill='%23fff'/%3E%3Cpath d='M16 30h7v17h-7zM28.5 30h7v17h-7zM41 30h7v17h-7zM11 49h42v5H11z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#2c4a9a">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<style>
+/* Layout: ünite listesi solda, okuma sütunu ortada; telefonda liste yatay şeride döner. */
+:root{
+  --paper:#eef1f4; --surface:#ffffff; --ink:#16202b; --muted:#566473;
+  --line:#d3dae1; --accent:#2c4a9a; --accent-ink:#ffffff; --mark:#f6dd8a; --soft:#e2e8f3;
+  --display:"Bricolage Grotesque",system-ui,"Segoe UI",sans-serif;
+  --read:"Literata",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#10151b; --surface:#19212a; --ink:#e7ebef; --muted:#97a4b1;
+    --line:#2b3642; --accent:#93adf5; --accent-ink:#0f1726; --mark:#6a5310; --soft:#222d3c;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#10151b; --surface:#19212a; --ink:#e7ebef; --muted:#97a4b1;
+  --line:#2b3642; --accent:#93adf5; --accent-ink:#0f1726; --mark:#6a5310; --soft:#222d3c;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--display);font-size:16px;line-height:1.5}
+button,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:calc(20px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) calc(56px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));display:flex;flex-direction:column;gap:20px}
+
+header{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px}
+.brand{display:flex;align-items:center;gap:12px;margin-right:auto}
+.brand svg{width:46px;height:46px;flex:none}
+.brand b{display:block;font-size:1.45rem;font-weight:700;letter-spacing:-.01em;line-height:1.1}
+.brand span{color:var(--muted);font-size:.9rem}
+.seg{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:none;padding:8px 16px;cursor:pointer;font-weight:600}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+
+.cols{display:grid;grid-template-columns:260px minmax(0,1fr);gap:24px;align-items:start}
+aside{display:flex;flex-direction:column;gap:22px}
+.label{font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.units{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.units button{width:100%;display:flex;gap:10px;text-align:left;border:0;background:none;padding:8px 10px;border-radius:8px;cursor:pointer}
+.units button:hover{background:var(--soft)}
+.units button[aria-current="true"]{background:var(--surface);box-shadow:inset 3px 0 0 var(--accent)}
+.units i{font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums;min-width:1.2em}
+.units b{display:block;font-weight:600;line-height:1.25}
+.units small{color:var(--muted);font-size:.82rem}
+.words{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:.9rem}
+.words b{font-family:var(--read);font-weight:600}
+.words span{color:var(--muted)}
+.empty{color:var(--muted);font-size:.88rem;margin:0}
+.link{border:0;background:none;padding:0;color:var(--accent);cursor:pointer;font-size:.85rem;text-decoration:underline;align-self:flex-start}
+
+main{display:flex;flex-direction:column;gap:20px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:16px}
+h1{font-size:clamp(1.6rem,4vw,2.2rem);line-height:1.1;margin:0;letter-spacing:-.02em;text-wrap:balance}
+h2{font-size:1.15rem;margin:0}
+.sub{margin:0;color:var(--muted)}
+.hint{margin:0;font-size:.88rem;color:var(--muted);padding:8px 12px;background:var(--soft);border-radius:8px}
+.it{font-family:var(--read);font-size:1.16rem;line-height:1.75;max-width:65ch;margin:0;white-space:pre-wrap}
+.w{cursor:pointer;border-radius:3px;text-decoration:underline dotted transparent;text-underline-offset:4px}
+.w:hover{text-decoration-color:var(--muted)}
+.w.on{background:var(--mark)}
+.terms{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.terms li{border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:.92rem}
+.terms b{font-family:var(--read);font-weight:600}
+.terms span{color:var(--muted)}
+
+.presets{display:flex;flex-wrap:wrap;gap:8px}
+.presets button{border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:8px 12px;cursor:pointer;text-align:left;font-family:var(--read);font-size:.98rem}
+.presets button:hover{border-color:var(--accent)}
+.thread{display:flex;flex-direction:column;gap:14px}
+.q{align-self:flex-end;max-width:85%;background:var(--soft);border-radius:12px 12px 2px 12px;padding:10px 14px;font-family:var(--read)}
+.a{display:flex;flex-direction:column;gap:8px;border-left:3px solid var(--accent);padding-left:14px}
+.a .it{font-size:1.08rem}
+.a .trans{margin:0;color:var(--muted);max-width:65ch;white-space:pre-wrap}
+.ask{display:flex;gap:10px;align-items:flex-end}
+.ask textarea{flex:1;min-width:0;min-height:52px;max-height:160px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--paper)}
+.go{border:0;border-radius:10px;background:var(--accent);color:var(--accent-ink);font-weight:600;padding:14px 20px;cursor:pointer}
+.go[disabled]{opacity:.5;cursor:default}
+.note{margin:0;font-size:.88rem;color:var(--muted)}
+
+#pop{position:absolute;z-index:10;max-width:260px;background:var(--ink);color:var(--paper);border-radius:10px;padding:10px 14px;box-shadow:0 8px 24px rgba(0,0,0,.25);display:none}
+#pop b{display:block;font-family:var(--read);font-size:1.05rem}
+#pop span{display:block;font-size:.95rem}
+#pop small{display:block;opacity:.7;font-size:.75rem;margin-top:4px}
+
+@media (max-width:760px){
+  .cols{grid-template-columns:minmax(0,1fr)}
+  .units{flex-direction:row;overflow-x:auto;gap:8px;padding-bottom:6px}
+  .units li{flex:none;max-width:220px}
+  .units button{border:1px solid var(--line);background:var(--surface)}
+  .units button[aria-current="true"]{box-shadow:inset 0 -3px 0 var(--accent)}
+  .card{padding:18px}
+  aside{order:0}
+  .wordbox{order:3}
+}
+@media (prefers-reduced-motion:no-preference){.w{transition:background .15s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <svg viewBox="0 0 64 64" role="img" aria-label="Agorà simgesi"><rect width="64" height="64" rx="15" fill="#2c4a9a"/><circle cx="47" cy="14" r="5" fill="#f0c545"/><path d="M32 14 12 27h40z" fill="#fff"/><path d="M16 30h7v17h-7zM28.5 30h7v17h-7zM41 30h7v17h-7zM11 49h42v5H11z" fill="#fff"/></svg>
+      <div><b>Agorà</b><span>İtalyanca felsefe çalışma odası</span></div>
+    </div>
+    <div class="seg" role="group" aria-label="Sınıf">
+      <button type="button" id="g10" data-g="10">10. sınıf</button>
+      <button type="button" id="g11" data-g="11">11. sınıf</button>
+    </div>
+  </header>
+
+  <div class="cols">
+    <aside>
+      <nav aria-label="Üniteler">
+        <p class="label">Üniteler</p>
+        <ol class="units" id="units"></ol>
+      </nav>
+      <section class="wordbox" aria-label="Baktığım kelimeler">
+        <p class="label">Baktığım kelimeler</p>
+        <ul class="words" id="words"></ul>
+        <p class="empty" id="wordsEmpty">Tıkladığın kelimeler burada birikir.</p>
+        <button type="button" class="link" id="clearWords" hidden>Listeyi temizle</button>
+      </section>
+    </aside>
+
+    <main>
+      <article class="card">
+        <p class="label" id="eyebrow"></p>
+        <h1 id="title"></h1>
+        <p class="sub" id="subtitle"></p>
+        <p class="hint">Türkçesini görmek için metindeki herhangi bir kelimeye tıkla.</p>
+        <p class="it" id="text" lang="it"></p>
+        <div>
+          <p class="label">Anahtar kavramlar</p>
+          <ul class="terms" id="terms"></ul>
+        </div>
+      </article>
+
+      <section class="card" aria-labelledby="askH">
+        <h2 id="askH">Soru sor</h2>
+        <p class="sub">İtalyanca ya da Türkçe sor. Cevap sade İtalyanca gelir; kelimelere yine tıklayabilirsin.</p>
+        <div class="presets" id="presets"></div>
+        <div class="thread" id="thread" aria-live="polite"></div>
+        <form class="ask" id="askForm">
+          <textarea id="question" aria-label="Sorun" placeholder="Örnek: Che cos'è la virtù per Aristotele?"></textarea>
+          <button class="go" id="send" type="submit">Sor</button>
+        </form>
+        <p class="note" id="askNote" hidden></p>
+      </section>
+    </main>
+  </div>
+</div>
+<div id="pop" role="status"><b id="popW"></b><span id="popT"></span><small id="popS"></small></div>
+
+<script>
+const UNITS = [
+  { g: 10, it: "La natura della filosofia", tr: "Felsefenin Doğası",
+    text: "La parola filosofia significa amore per la sapienza. Il filosofo non possiede la verità: la cerca. La filosofia nasce dalla meraviglia e dal dubbio. Una domanda filosofica è generale, riguarda tutti e non ha una risposta definitiva. Per questo la filosofia ci insegna a pensare in modo critico e a mettere in discussione le nostre idee.",
+    terms: [["sapienza","bilgelik"],["filosofo","filozof"],["riflessione","refleksiyon"],["indagine","sorgulama"],["meraviglia","hayret"]],
+    qs: ["Che cosa significa la parola filosofia?","Quali sono le caratteristiche di una domanda filosofica?"] },
+  { g: 10, it: "Filosofia, logica e argomentazione", tr: "Felsefe, Mantık ve Argümantasyon",
+    text: "Pensiamo con le parole: pensiero e linguaggio sono legati. La logica studia le regole del ragionamento corretto. Un argomento è formato da premesse e da una conclusione. Se la conclusione segue dalle premesse, l'argomento è valido. Una fallacia è un ragionamento che sembra corretto ma non lo è. Chi pensa bene evita le contraddizioni.",
+    terms: [["ragionamento","akıl yürütme"],["argomento","argüman"],["premessa","öncül"],["validità","geçerlilik"],["fallacia","safsata"],["coerenza","tutarlılık"]],
+    qs: ["Quando un argomento è valido?","Puoi darmi un esempio di fallacia?"] },
+  { g: 10, it: "Filosofia dell'essere", tr: "Varlık Felsefesi",
+    text: "L'ontologia si chiede: che cosa esiste davvero? Per Platone la vera realtà sono le idee, eterne e perfette. Per Democrito tutto è fatto di atomi, cioè di materia. Eraclito dice che tutto cambia: la realtà è divenire. Aristotele chiama sostanza ciò che esiste in sé. Altri filosofi, i nichilisti, negano che l'essere esista.",
+    terms: [["essere","varlık"],["sostanza","töz"],["materia","madde"],["divenire","oluş"],["essenza","öz"],["esistenza","varoluş"],["fenomeno","fenomen"]],
+    qs: ["Che cosa sono le idee per Platone?","Qual è la differenza tra essere e divenire?"] },
+  { g: 10, it: "Filosofia della conoscenza", tr: "Bilgi Felsefesi",
+    text: "Possiamo conoscere la verità? I dogmatici rispondono di sì; gli scettici dubitano di ogni conoscenza. Da dove viene il sapere? Per i razionalisti, come Cartesio, viene dalla ragione. Per gli empiristi, come Locke, viene dall'esperienza. Kant unisce le due posizioni: la conoscenza nasce dall'esperienza, ma la mente le dà una forma.",
+    terms: [["conoscenza","bilgi"],["verità","doğruluk"],["realtà","gerçeklik"],["ragione","akıl"],["esperienza","deneyim"],["dubbio","şüphe"]],
+    qs: ["Qual è la differenza tra razionalismo ed empirismo?","Che cosa pensano gli scettici?"] },
+  { g: 10, it: "Filosofia morale", tr: "Ahlak Felsefesi",
+    text: "L'etica studia il bene e il male nelle azioni umane. Esiste una legge morale valida per tutti? Kant risponde di sì: bisogna agire secondo un dovere universale. Altri pensano che il bene dipenda dalla società o dall'utilità. Senza libertà non c'è responsabilità: siamo responsabili solo delle azioni che scegliamo. La coscienza ci aiuta a giudicare.",
+    terms: [["morale","ahlak"],["virtù","erdem"],["bene","iyi"],["male","kötü"],["libertà","özgürlük"],["responsabilità","sorumluluk"],["coscienza","vicdan"]],
+    qs: ["Esiste una legge morale universale?","Perché la libertà è legata alla responsabilità?"] },
+  { g: 10, it: "Estetica e filosofia dell'arte", tr: "Estetik ve Sanat Felsefesi",
+    text: "L'estetica si occupa della bellezza e dell'arte. Che cos'è un'opera d'arte? Per Platone l'arte è imitazione; per altri è creazione o gioco. La bellezza è nell'oggetto o negli occhi di chi guarda? Kant pensa che il giudizio estetico sia soggettivo, ma che tutti possano condividerlo.",
+    terms: [["bellezza","güzellik"],["arte","sanat"],["opera d'arte","sanat eseri"],["gusto","beğeni"],["giudizio estetico","estetik yargı"]],
+    qs: ["La bellezza è soggettiva o oggettiva?","Che cos'è l'arte per Platone?"] },
+  { g: 10, it: "Filosofia politica", tr: "Siyaset Felsefesi",
+    text: "Perché esiste lo Stato? Per Aristotele l'uomo è per natura un animale politico. Per Hobbes, Locke e Rousseau lo Stato nasce da un contratto tra gli individui. Il potere è legittimo quando rispetta la giustizia e i diritti. Platone, al-Farabi e Tommaso Moro hanno immaginato società ideali: le utopie.",
+    terms: [["giustizia","adalet"],["Stato","devlet"],["potere","iktidar"],["legittimità","meşruiyet"],["uguaglianza","eşitlik"],["individuo","birey"],["società","toplum"],["utopia","ütopya"]],
+    qs: ["Come nasce lo Stato secondo Hobbes?","Quando il potere è legittimo?"] },
+  { g: 10, it: "Filosofia della religione", tr: "Din Felsefesi",
+    text: "La filosofia della religione esamina la fede con la ragione. Dio esiste? Il teismo dice di sì, l'ateismo lo nega, l'agnosticismo afferma che non possiamo saperlo. Alcuni filosofi hanno proposto prove dell'esistenza di Dio, come la prova ontologica e quella cosmologica. Altre domande riguardano l'universo, finito o infinito, e l'immortalità dell'anima.",
+    terms: [["Dio","Tanrı"],["fede","iman"],["credenza","inanç"],["rivelazione","vahiy"],["culto","ibadet"],["anima","ruh"]],
+    qs: ["Qual è la differenza tra teismo, ateismo e agnosticismo?","Che cos'è la prova ontologica?"] },
+  { g: 10, it: "Filosofia della scienza", tr: "Bilim Felsefesi",
+    text: "Che cos'è la scienza e qual è il suo metodo? Per i positivisti una teoria è scientifica se si può verificare. Popper propone invece la falsificazione: una teoria è scientifica se può essere smentita dai fatti. Kuhn spiega che la scienza cambia con le rivoluzioni, quando un paradigma sostituisce un altro.",
+    terms: [["scienza","bilim"],["metodo","yöntem"],["teoria","kuram"],["verificazione","doğrulama"],["falsificazione","yanlışlama"],["paradigma","paradigma"]],
+    qs: ["Che cos'è la falsificazione per Popper?","Che cosa significa paradigma per Kuhn?"] },
+  { g: 11, it: "Problemi ambientali e filosofia", tr: "Çevre Sorunları ve Felsefe",
+    text: "L'uomo fa parte della natura o ne è il padrone? L'etica ambientale studia i nostri doveri verso gli animali, le piante e le generazioni future. L'inquinamento e il cambiamento climatico mostrano che le nostre scelte hanno conseguenze. Hans Jonas parla di un principio di responsabilità verso il futuro.",
+    terms: [["ambiente","çevre"],["natura","doğa"],["inquinamento","kirlilik"],["etica ambientale","çevre etiği"],["generazioni future","gelecek nesiller"]],
+    qs: ["Abbiamo doveri verso la natura?","Che cos'è il principio di responsabilità di Jonas?"] },
+  { g: 11, it: "Tecnologia e vita", tr: "Teknoloji ve Hayat",
+    text: "La tecnologia cambia il nostro modo di vivere, lavorare e comunicare. È solo uno strumento o trasforma anche l'uomo? L'intelligenza artificiale pone nuove domande: una macchina può pensare? Chi è responsabile delle sue decisioni? La filosofia ci aiuta a usare la tecnica con saggezza.",
+    terms: [["tecnologia","teknoloji"],["strumento","araç"],["intelligenza artificiale","yapay zekâ"],["macchina","makine"],["saggezza","bilgelik"]],
+    qs: ["Una macchina può pensare?","La tecnologia è solo uno strumento?"] },
+  { g: 11, it: "Ragione e fede", tr: "Akıl ve İnanç",
+    text: "Ragione e fede sono nemiche o alleate? Per alcuni pensatori la fede viene prima della ragione; per altri solo la ragione porta alla verità. Filosofi come al-Ghazali, Averroè e Tommaso d'Aquino hanno cercato un accordo tra le due vie.",
+    terms: [["ragione","akıl"],["fede","inanç, iman"],["verità","hakikat"],["accordo","uzlaşma"],["pensatore","düşünür"]],
+    qs: ["Ragione e fede possono andare d'accordo?","Che cosa pensa Averroè del rapporto tra ragione e fede?"] },
+  { g: 11, it: "Letteratura e filosofia", tr: "Edebiyat ve Felsefe",
+    text: "Romanzi, poesie e racconti possono esprimere idee filosofiche. Uno scrittore mostra con una storia ciò che il filosofo spiega con i concetti. Dostoevskij parla della libertà e della colpa, Camus dell'assurdo. Leggere letteratura ci fa capire meglio la vita degli altri.",
+    terms: [["letteratura","edebiyat"],["romanzo","roman"],["scrittore","yazar"],["concetto","kavram"],["assurdo","absürt, saçma"]],
+    qs: ["Come può un romanzo esprimere idee filosofiche?","Che cos'è l'assurdo per Camus?"] },
+  { g: 11, it: "Il senso della vita", tr: "Hayatın Anlamı",
+    text: "La vita ha un senso? Per Aristotele lo scopo della vita è la felicità, che si raggiunge con la virtù. Per gli esistenzialisti, come Sartre, il senso non è dato: ogni persona lo crea con le proprie scelte. Anche la morte, il dolore e la speranza sono temi di questa ricerca.",
+    terms: [["senso","anlam"],["scopo","amaç"],["felicità","mutluluk"],["virtù","erdem"],["speranza","umut"]],
+    qs: ["Che cos'è la felicità per Aristotele?","Che cosa dicono gli esistenzialisti sul senso della vita?"] },
+  { g: 11, it: "Diritto e filosofia", tr: "Hukuk ve Felsefe",
+    text: "Il diritto è l'insieme delle leggi di una società. Una legge è sempre giusta? Il diritto naturale afferma che esistono diritti validi per ogni uomo; il diritto positivo guarda solo alle leggi scritte. La filosofia del diritto riflette sul rapporto tra legge, giustizia e diritti umani.",
+    terms: [["diritto","hukuk; hak"],["legge","yasa"],["giustizia","adalet"],["diritto naturale","doğal hukuk"],["diritti umani","insan hakları"]],
+    qs: ["Qual è la differenza tra diritto naturale e diritto positivo?","Una legge può essere ingiusta?"] }
+];
+const DICT = {
+"a":"-e, -a; -de (edat)","abbiamo":"sahibiz; var (bizim)","accordo":"uzlaşma, anlaşma","afferma":"ileri sürer, öne sürer","agire":"eylemde bulunmak, davranmak","agnosticismo":"agnostisizm, bilinemezcilik","aiuta":"yardım eder","al-farabi":"Fârâbî (filozof)","al-ghazali":"Gazâlî (düşünür)","alcuni":"bazı, kimi","alla":"-e, -a (dişil tekil)","alle":"-e, -a (dişil çoğul)","alleate":"müttefik, dost","altre":"başka, diğer (dişil çoğul)","altri":"başkaları, diğerleri","altro":"başka, diğeri","ambientale":"çevresel","ambientali":"çevresel (çoğul)","ambiente":"çevre","amore":"sevgi, aşk","anche":"de, da; ayrıca","andare":"gitmek","anima":"ruh","animale":"hayvan; canlı","animali":"hayvanlar","aquino":"Aquino (Aquinolu Thomas)","argomentazione":"argümantasyon, temellendirme","argomento":"argüman; konu","aristotele":"Aristoteles (filozof)","arte":"sanat","artificiale":"yapay","assurdo":"absürt, saçma","ateismo":"ateizm, tanrıtanımazlık","atomi":"atomlar","averroè":"İbn Rüşd (filozof)","azioni":"eylemler","bellezza":"güzellik","bene":"iyi; iyilik","bisogna":"gerekir","c'":"orada (c'è: vardır)","cambia":"değişir; değiştirir","cambiamento":"değişim, değişiklik","camus":"Albert Camus (yazar, filozof)","capire":"anlamak","caratteristiche":"özellikler","cartesio":"Descartes (filozof)","cerca":"arar","cercato":"aramış, aradı","che":"ki; -en, -an; ne","chi":"kim; -en kişi","chiama":"adlandırır, çağırır","chiede":"sorar","ci":"bize, bizi; orada","cioè":"yani","ciò":"şey, o (ciò che: -en şey)","climatico":"iklimsel, iklim-","coerenza":"tutarlılık","colpa":"suç, suçluluk","come":"gibi; nasıl","comunicare":"iletişim kurmak","con":"ile","concetti":"kavramlar","concetto":"kavram","conclusione":"sonuç","condividerlo":"onu paylaşmak","conoscenza":"bilgi","conoscere":"bilmek, tanımak","conseguenze":"sonuçlar","contraddizioni":"çelişkiler","contratto":"sözleşme","corretto":"doğru","cos'":"ne, şey (che cos'è: nedir)","cosa":"şey; ne","coscienza":"vicdan; bilinç","cosmologica":"kozmolojik","crea":"yaratır","creazione":"yaratma, yaratım","credenza":"inanç","critico":"eleştirel","culto":"ibadet, tapınma","d'":"-in, -den (di)","da":"-den, -dan; tarafından","dai":"-den; tarafından (eril çoğul)","dal":"-den, -dan (eril tekil)","dall'":"-den, -dan","dalla":"-den, -dan (dişil tekil)","dalle":"-den, -dan (dişil çoğul)","darmi":"bana vermek","dato":"verilmiş, verili","davvero":"gerçekten","decisioni":"kararlar","definitiva":"kesin, nihai","degli":"-lerin (eril çoğul)","del":"-in, -ın (eril tekil)","dell'":"-in, -ın","della":"-in, -ın (dişil tekil)","delle":"-lerin (dişil çoğul)","democrito":"Demokritos (filozof)","di":"-in, -den; hakkında","dice":"der, söyler","dicono":"derler, söylerler","differenza":"fark","dio":"Tanrı","dipenda":"bağlı olsun (dipendere: bağlı olmak)","diritti":"haklar","diritto":"hukuk; hak","discussione":"tartışma (mettere in discussione: sorgulamak)","divenire":"oluş; olmak","dogmatici":"dogmatikler","dolore":"acı","domanda":"soru","domande":"sorular","dostoevskij":"Dostoyevski (yazar)","dove":"nerede (da dove: nereden)","dovere":"ödev, görev","doveri":"ödevler, görevler","dubbio":"şüphe, kuşku","dubitano":"şüphe ederler","due":"iki","dà":"verir","e":"ve","ed":"ve","empirismo":"empirizm, deneycilik","empiristi":"empiristler, deneyciler","eraclito":"Herakleitos (filozof)","esamina":"inceler","esempio":"örnek","esista":"var olsun (esistere: var olmak)","esiste":"var, vardır","esistenza":"varoluş, varlık","esistenzialisti":"varoluşçular","esistono":"vardırlar, var","esperienza":"deneyim, deney","esprimere":"ifade etmek","essenza":"öz","essere":"varlık; olmak","estetica":"estetik","estetico":"estetik (sıfat)","eterne":"ezelî-ebedî, sonsuz","etica":"etik, ahlak felsefesi","evita":"kaçınır","fa":"yapar (fa parte: parçasıdır)","fallacia":"safsata","falsificazione":"yanlışlama","fatti":"olgular","fatto":"yapılmış; olgu","fede":"iman, inanç","felicità":"mutluluk","fenomeno":"fenomen, görüngü","filosofi":"filozoflar","filosofia":"felsefe","filosofica":"felsefi","filosofiche":"felsefi (çoğul)","filosofo":"filozof","finito":"sonlu","forma":"biçim, form","formato":"oluşmuş","future":"gelecek (sıfat, çoğul)","futuro":"gelecek","generale":"genel","generazioni":"nesiller, kuşaklar","gioco":"oyun","giudicare":"yargılamak, değerlendirmek","giudizio":"yargı","giusta":"adil, doğru","giustizia":"adalet","gli":"belirli tanımlık (eril çoğul)","guarda":"bakar","gusto":"beğeni, zevk","ha":"sahiptir; var","hanno":"sahipler; -mişler (yardımcı fiil)","hans":"Hans (Hans Jonas)","hobbes":"Thomas Hobbes (filozof)","i":"belirli tanımlık (eril çoğul)","ideali":"ideal (çoğul)","idee":"idealar; fikirler","il":"belirli tanımlık (eril tekil)","imitazione":"taklit","immaginato":"hayal etmiş, tasarlamış","immortalità":"ölümsüzlük","in":"-de, -da; içinde","indagine":"sorgulama, araştırma","individui":"bireyler","individuo":"birey","infinito":"sonsuz","ingiusta":"adaletsiz, haksız","inquinamento":"kirlilik","insegna":"öğretir","insieme":"bütün, küme; birlikte","intelligenza":"zekâ","invece":"ise, bunun yerine","jonas":"Hans Jonas (filozof)","kant":"Immanuel Kant (filozof)","kuhn":"Thomas Kuhn (bilim felsefecisi)","l'":"belirli tanımlık","la":"belirli tanımlık (dişil tekil); onu","lavorare":"çalışmak","le":"belirli tanımlık (dişil çoğul); ona","legata":"bağlı","legati":"bağlı (çoğul)","legge":"yasa","leggere":"okumak","leggi":"yasalar","legittimità":"meşruiyet","legittimo":"meşru","letteratura":"edebiyat","libertà":"özgürlük","linguaggio":"dil","lo":"onu; belirli tanımlık (eril tekil)","locke":"John Locke (filozof)","logica":"mantık","ma":"ama, fakat","macchina":"makine","male":"kötü; kötülük","materia":"madde","meglio":"daha iyi","mente":"zihin","meraviglia":"hayret, şaşma","metodo":"yöntem","mettere":"koymak (mettere in discussione: sorgulamak)","modo":"biçim, tarz, yol","morale":"ahlak; ahlaki","moro":"Thomas More (Tommaso Moro)","morte":"ölüm","mostra":"gösterir","mostrano":"gösterirler","nasce":"doğar","natura":"doğa","naturale":"doğal","ne":"ondan, onun","nega":"reddeder, yadsır","negano":"reddederler, yadsırlar","negli":"-lerde, içinde (eril çoğul)","nell'":"-de, içinde","nelle":"-lerde, içinde (dişil çoğul)","nemiche":"düşman","nichilisti":"nihilistler","non":"değil; -me, -ma (olumsuzluk)","nostre":"bizim (dişil çoğul)","nostri":"bizim (eril çoğul)","nostro":"bizim","nuove":"yeni (çoğul)","o":"veya, ya da","occhi":"gözler","occupa":"ilgilenir (si occupa di: ile ilgilenir)","oggettiva":"nesnel","oggetto":"nesne","ogni":"her","ontologia":"ontoloji, varlık felsefesi","ontologica":"ontolojik","opera":"eser","padrone":"efendi, sahip","paradigma":"paradigma","parla":"konuşur, söz eder","parola":"sözcük, kelime","parole":"sözcükler, kelimeler","parte":"parça, bölüm","pensa":"düşünür (fiil)","pensano":"düşünürler (fiil)","pensare":"düşünmek","pensatore":"düşünür","pensatori":"düşünürler","pensiamo":"düşünürüz","pensiero":"düşünce","per":"için; -e göre","perché":"neden; çünkü","perfette":"mükemmel, kusursuz","persona":"kişi","piante":"bitkiler","platone":"Platon (filozof)","poesie":"şiirler","politica":"siyaset; siyasi","politico":"siyasi, politik","pone":"ortaya koyar, sorar","popper":"Karl Popper (bilim felsefecisi)","porta":"götürür, ulaştırır","positivisti":"pozitivistler","positivo":"pozitif","posizioni":"görüşler, konumlar","possano":"-ebilsinler (potere)","possiamo":"-ebiliriz","possiede":"sahiptir","possono":"-ebilirler","potere":"iktidar, güç; -ebilmek","premessa":"öncül","premesse":"öncüller","prima":"önce","principio":"ilke","problemi":"sorunlar, problemler","propone":"önerir","proposto":"önermiş, öne sürmüş","proprie":"kendi (çoğul)","prova":"kanıt, kanıtlama","prove":"kanıtlar","puoi":"-ebilirsin","può":"-ebilir","qual":"hangi, ne (qual è: nedir)","quali":"hangileri, neler","quando":"ne zaman; -dığında","quella":"o, şu (dişil)","questa":"bu (dişil)","questo":"bu (per questo: bu yüzden)","racconti":"öyküler","raggiunge":"ulaşır (si raggiunge: ulaşılır)","ragionamento":"akıl yürütme","ragione":"akıl","rapporto":"ilişki","razionalismo":"rasyonalizm, akılcılık","razionalisti":"rasyonalistler, akılcılar","realtà":"gerçeklik","regole":"kurallar","religione":"din","responsabile":"sorumlu","responsabili":"sorumlu (çoğul)","responsabilità":"sorumluluk","ricerca":"arayış, araştırma","riflessione":"refleksiyon, derin düşünme","riflette":"üzerine düşünür","riguarda":"ilgilendirir, ilgilidir","riguardano":"ilgilidirler","rispetta":"saygı gösterir, gözetir","risponde":"cevap verir","rispondono":"cevap verirler","risposta":"cevap","rivelazione":"vahiy","rivoluzioni":"devrimler","romanzi":"romanlar","romanzo":"roman","rousseau":"Jean-Jacques Rousseau (filozof)","saggezza":"bilgelik","sapere":"bilgi; bilmek","saperlo":"onu bilmek","sapienza":"bilgelik, hikmet","sartre":"Jean-Paul Sartre (filozof)","scegliamo":"seçeriz","scelte":"seçimler, tercihler","scettici":"şüpheciler, septikler","scientifica":"bilimsel","scienza":"bilim","scopo":"amaç","scritte":"yazılı","scrittore":"yazar","se":"eğer, -se","secondo":"-e göre","segue":"çıkar, izler","sembra":"görünür, gibi görünür","sempre":"her zaman","senso":"anlam","senza":"-sız, olmadan","si":"kendini; -ilir (edilgen/dönüşlü)","sia":"olsun (essere); hem","siamo":"-iz (biz ...-iz), oluruz","significa":"anlamına gelir","smentita":"çürütülmüş, yanlışlanmış","società":"toplum","soggettiva":"öznel","soggettivo":"öznel","solo":"yalnızca, sadece","sono":"-dirler; -im (essere)","sostanza":"töz","sostituisce":"yerini alır","speranza":"umut","spiega":"açıklar","stato":"devlet","storia":"öykü; tarih","strumento":"araç","studia":"inceler, araştırır","sue":"onun (dişil çoğul)","sul":"üzerine, hakkında","suo":"onun","sé":"kendi (in sé: kendi başına)","sì":"evet","tecnica":"teknik","tecnologia":"teknoloji","teismo":"teizm","temi":"konular, temalar","teoria":"kuram, teori","tommaso":"Thomas (Tommaso)","tra":"arasında","trasforma":"dönüştürür","tutti":"herkes; bütün","tutto":"her şey; bütün","uguaglianza":"eşitlik","umane":"insani, insana ait (çoğul)","umani":"insani (diritti umani: insan hakları)","un":"bir (eril)","un'":"bir (dişil)","una":"bir (dişil)","unisce":"birleştirir","universale":"evrensel","universo":"evren","uno":"bir","uomo":"insan","usare":"kullanmak","utilità":"fayda, yarar","utopia":"ütopya","utopie":"ütopyalar","valida":"geçerli","validi":"geçerli (çoğul)","validità":"geçerlilik","valido":"geçerli","vera":"gerçek, hakiki","verificare":"doğrulamak","verificazione":"doğrulama","verità":"doğruluk, hakikat","verso":"-e doğru, -e karşı","vie":"yollar","viene":"gelir","virtù":"erdem","vita":"hayat, yaşam","vivere":"yaşamak","è":"-dir, -dır (olmak)"
+};
+
+</script>
+<script>
+(function(){
+"use strict";
+var RE=/[A-Za-zÀ-ÿ]+(?:-[A-Za-zÀ-ÿ]+)*['’]?/g;
+var $=function(id){return document.getElementById(id)};
+function load(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+
+var cur=load("agora.unit",0); if(!UNITS[cur])cur=0;
+var words=load("agora.words",[]);
+var cache=load("agora.cache",{});
+var threads={};           // ünite -> [{q,a,tr}]
+var busy=false;
+
+/* ---------- Claude bağlantısı ---------- */
+/* MOBİL: Claude dışında çalışırken sorular ve çeviriler kendi sunucuna gider.
+   Sunucun POST {prompt} alıp {text} döndürmeli. Boş bırakırsan yalnızca metinler ve yerleşik sözlük çalışır. */
+var API_URL="";
+function viaServer(input,opts){
+  return fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:input})})
+    .then(function(r){if(r.status===429)throw {code:"rate_limited"};if(!r.ok)throw {code:"server"};return r.json()})
+    .then(function(j){var t=j.text||"";if(opts&&opts.onText)opts.onText({text:t,delta:t});return {text:t}});
+}
+var sampleP=null;
+function getSample(){
+  if(!sampleP){
+    sampleP=(window.claude&&typeof window.claude.use==="function")
+      ? Promise.resolve(window.claude.use("sample")).catch(function(){return null})
+      : Promise.resolve(API_URL ? viaServer : null);
+  }
+  return sampleP;
+}
+
+/* ---------- tıklanabilir metin ---------- */
+function fill(el,text){
+  el.textContent="";
+  var last=0,m;RE.lastIndex=0;
+  while((m=RE.exec(text))){
+    if(m.index>last)el.appendChild(document.createTextNode(text.slice(last,m.index)));
+    var s=document.createElement("span");s.className="w";s.textContent=m[0];el.appendChild(s);
+    last=m.index+m[0].length;
+  }
+  if(last<text.length)el.appendChild(document.createTextNode(text.slice(last)));
+}
+function norm(w){return w.toLowerCase().replace(/’/g,"'")}
+function local(w){
+  var k=norm(w);
+  if(DICT[k])return DICT[k];
+  return cache[k]||null;
+}
+
+var pop=$("pop"),active=null,ticket=0;
+function place(el){
+  var r=el.getBoundingClientRect();
+  pop.style.display="block";
+  var x=r.left+window.scrollX, y=r.bottom+window.scrollY+8;
+  var max=document.documentElement.clientWidth-pop.offsetWidth-12+window.scrollX;
+  pop.style.left=Math.max(12,Math.min(x,max))+"px";
+  pop.style.top=y+"px";
+}
+function hide(){pop.style.display="none";if(active){active.classList.remove("on");active=null}}
+function remember(w,tr){
+  var k=norm(w);
+  words=words.filter(function(x){return x.w!==k});
+  words.unshift({w:k,tr:tr}); if(words.length>40)words.length=40;
+  save("agora.words",words); drawWords();
+}
+function show(el){
+  hide(); active=el; el.classList.add("on");
+  var w=el.textContent, my=++ticket;
+  $("popW").textContent=w; $("popS").textContent="";
+  var hit=local(w);
+  if(hit){$("popT").textContent=hit;place(el);remember(w,hit);return}
+  $("popT").textContent="Çevriliyor…";place(el);
+  var box=el.closest(".it"), ctx=box?box.textContent:"";
+  var at=ctx.indexOf(w); if(at>-1)ctx=ctx.slice(Math.max(0,at-140),at+140);
+  getSample().then(function(sample){
+    if(!sample)throw {code:"none"};
+    return sample("İtalyanca \""+w+"\" kelimesinin şu bağlamdaki Türkçe karşılığını ver: \""+ctx+"\"\nYalnızca Türkçe karşılığı yaz, en çok 6 kelime, açıklama ve noktalama ekleme.",{modelTier:"quick"});
+  }).then(function(r){
+    var t=(r.text||"").trim().replace(/^["'“]|["'”.]$/g,"");
+    if(!t)throw {code:"empty"};
+    cache[norm(w)]=t; save("agora.cache",cache); remember(w,t);
+    if(my===ticket){$("popT").textContent=t;$("popS").textContent="Claude çevirisi";place(el)}
+  }).catch(function(e){
+    if(my!==ticket)return;
+    $("popT").textContent=e&&e.code==="rate_limited"?"Çok hızlı gittik. Biraz bekleyip tekrar tıkla.":"Bu kelime yerleşik sözlükte yok ve çeviri şu an alınamadı.";
+    place(el);
+  });
+}
+document.addEventListener("click",function(e){
+  var t=e.target;
+  if(t.classList&&t.classList.contains("w")){show(t);return}
+  if(!pop.contains(t))hide();
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")hide()});
+window.addEventListener("resize",hide);
+
+/* ---------- çizim ---------- */
+function drawWords(){
+  var ul=$("words");ul.textContent="";
+  words.forEach(function(x){
+    var li=document.createElement("li"),b=document.createElement("b"),s=document.createElement("span");
+    b.textContent=x.w;s.textContent=" · "+x.tr;li.appendChild(b);li.appendChild(s);ul.appendChild(li);
+  });
+  $("wordsEmpty").hidden=words.length>0; $("clearWords").hidden=words.length===0;
+}
+$("clearWords").addEventListener("click",function(){words=[];save("agora.words",words);drawWords()});
+
+function drawUnits(){
+  var g=UNITS[cur].g, ol=$("units"), n=0; ol.textContent="";
+  $("g10").setAttribute("aria-pressed",g===10); $("g11").setAttribute("aria-pressed",g===11);
+  UNITS.forEach(function(u,i){
+    if(u.g!==g)return; n++;
+    var li=document.createElement("li"),b=document.createElement("button");
+    b.type="button"; if(i===cur)b.setAttribute("aria-current","true");
+    b.innerHTML="<i></i><span><b></b><small></small></span>";
+    b.querySelector("i").textContent=n;
+    b.querySelector("b").textContent=u.it; b.querySelector("small").textContent=u.tr;
+    b.addEventListener("click",function(){go(i)});
+    li.appendChild(b); ol.appendChild(li);
+  });
+}
+function unitNo(i){var n=0;for(var k=0;k<=i;k++)if(UNITS[k].g===UNITS[i].g)n++;return n}
+function drawUnit(){
+  var u=UNITS[cur];
+  $("eyebrow").textContent=u.g+". sınıf · "+unitNo(cur)+". ünite";
+  $("title").textContent=u.it; $("subtitle").textContent=u.tr;
+  fill($("text"),u.text);
+  var ul=$("terms");ul.textContent="";
+  u.terms.forEach(function(t){
+    var li=document.createElement("li"),b=document.createElement("b"),s=document.createElement("span");
+    b.textContent=t[0];s.textContent=" · "+t[1];li.appendChild(b);li.appendChild(s);ul.appendChild(li);
+  });
+  var pr=$("presets");pr.textContent="";
+  u.qs.forEach(function(q){
+    var b=document.createElement("button");b.type="button";b.textContent=q;
+    b.addEventListener("click",function(){ask(q)});pr.appendChild(b);
+  });
+  drawThread();
+}
+function drawThread(){
+  var box=$("thread");box.textContent="";
+  (threads[cur]||[]).forEach(function(t){
+    var q=document.createElement("div");q.className="q";q.textContent=t.q;box.appendChild(q);
+    var a=document.createElement("div");a.className="a";
+    var p=document.createElement("p");p.className="it";p.lang="it";fill(p,t.a||"Düşünüyorum…");a.appendChild(p);
+    if(t.tr){var tr=document.createElement("p");tr.className="trans";tr.textContent=t.tr;a.appendChild(tr)}
+    else if(t.done&&!t.err){
+      var b=document.createElement("button");b.type="button";b.className="link";b.textContent="Cevabın Türkçesini göster";
+      b.addEventListener("click",function(){translate(t,b)});a.appendChild(b);
+    }
+    box.appendChild(a);
+  });
+}
+function go(i){hide();cur=i;save("agora.unit",cur);drawUnits();drawUnit()}
+$("g10").addEventListener("click",function(){if(UNITS[cur].g!==10)go(0)});
+$("g11").addEventListener("click",function(){if(UNITS[cur].g!==11)go(UNITS.findIndex(function(u){return u.g===11}))});
+
+/* ---------- soru-cevap ---------- */
+function note(msg){var n=$("askNote");n.textContent=msg||"";n.hidden=!msg}
+function setBusy(b){busy=b;$("send").disabled=b;$("send").textContent=b?"Yazıyor…":"Sor"}
+function prompt(u,list,q){
+  var hist=list.slice(-4).map(function(t){return "Studente: "+t.q+"\nInsegnante: "+t.a}).join("\n");
+  return "Sei un insegnante di filosofia paziente. Lo studente è turco, studia la filosofia in italiano e segue il programma di filosofia del liceo turco (MEB, classi 10 e 11).\n"+
+    "Regole: rispondi sempre in italiano semplice (livello B1), con 3-6 frasi brevi, a livello di liceo. Niente markdown, niente elenchi, niente turco. Se la domanda è in turco, rispondi comunque in italiano. Se la domanda non riguarda la filosofia, riportala gentilmente al tema.\n\n"+
+    "Unità attuale: "+u.it+" ("+u.tr+")\nTesto dell'unità: "+u.text+"\n\n"+
+    (hist?"Conversazione finora:\n"+hist+"\n\n":"")+"Domanda dello studente: "+q;
+}
+function ask(q){
+  q=(q||"").trim(); if(!q||busy)return;
+  note(""); hide();
+  var at=cur, list=threads[at]||(threads[at]=[]), u=UNITS[at];
+  var p=prompt(u,list,q), turn={q:q,a:"",tr:"",done:false};
+  list.push(turn); drawThread(); setBusy(true);
+  getSample().then(function(sample){
+    if(!sample)throw {code:"none"};
+    return sample(p,{cache:false,onText:function(x){turn.a=x.text;if(cur===at)drawThread()}});
+  }).then(function(r){
+    turn.a=(r.text||turn.a).trim(); turn.done=true;
+  }).catch(function(e){
+    var c=e&&e.code;
+    if(e&&e.text){turn.a=e.text;turn.done=true}else{list.pop()}
+    note(c==="none"||c==="not_granted"?"Soru sormak için Claude bağlantısı gerekiyor ve bu görünümde açık değil. Metinler ve yerleşik sözlük çalışmaya devam ediyor."
+      :c==="rate_limited"?"Kısa sürede çok soru geldi. Biraz bekleyip tekrar dene."
+      :"Cevap alınamadı. Bağlantını kontrol edip tekrar dene.");
+    if(!turn.done)$("question").value=q;
+  }).then(function(){setBusy(false);if(cur===at)drawThread()});
+}
+function translate(t,btn){
+  btn.disabled=true;btn.textContent="Çevriliyor…";
+  getSample().then(function(sample){
+    if(!sample)throw {code:"none"};
+    return sample("Şu İtalyanca metni doğal Türkçeye çevir. Yalnızca çeviriyi yaz:\n\n"+t.a);
+  }).then(function(r){t.tr=(r.text||"").trim();drawThread()})
+  .catch(function(){btn.disabled=false;btn.textContent="Çeviri alınamadı, tekrar dene"});
+}
+$("askForm").addEventListener("submit",function(e){
+  e.preventDefault(); var v=$("question").value; if(!v.trim()||busy)return;
+  $("question").value=""; ask(v);
+});
+$("question").addEventListener("keydown",function(e){
+  if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();$("askForm").requestSubmit()}
+});
+
+drawUnits();drawUnit();drawWords();
+try{if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register("sw.js").catch(function(){})}catch(e){}
+})();
+</script>
+</body>
+</html>
