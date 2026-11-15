@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: agora-sunucu
+    runtime: node
+    plan: free
+    branch: agora-server
+    buildCommand: "echo hazir"
+    startCommand: node server.js
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: ALLOWED_ORIGIN
+        value: https://gercinci.github.io
